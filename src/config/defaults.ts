@@ -1,0 +1,31 @@
+import type { FinanceConfig } from "../types/index.js";
+
+export const DEFAULT_CONFIG: FinanceConfig = {
+  anthropicApiKey: "",
+  anthropicModel: "claude-sonnet-4-20250514",
+  whopApiKey: "",
+  whopCompanyId: "",
+  agentModes: {
+    create_invoice: "draft",
+    list_invoices: "auto",
+    get_invoice: "auto",
+    send_invoice: "draft",
+    list_payments: "auto",
+    get_payment: "auto",
+    create_refund: "draft",
+    get_revenue: "auto",
+    create_product: "draft",
+    list_products: "auto",
+    create_plan: "draft",
+    list_plans: "auto",
+    create_checkout_link: "auto",
+    list_checkouts: "auto",
+    polar_list_products: "auto",
+    polar_create_product: "draft",
+    polar_create_checkout: "auto",
+    polar_list_orders: "auto",
+    polar_list_subscriptions: "auto",
+    polar_list_customers: "auto",
+    get_settings: "auto",
+  },
+};
