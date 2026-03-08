@@ -10,6 +10,38 @@
   "toolsPath": "./ui/src/lib/ai/tools/index.ts",
   "dataDir": "~/.finance/data/",
 
+  "configFields": [
+    { "key": "whopCompanyId", "label": "Whop Company ID", "type": "string", "group": "General", "defaultValue": "" },
+
+    { "key": "agentModes.create_invoice", "label": "Create Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_invoices", "label": "List Invoices", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_invoice", "label": "Get Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.send_invoice", "label": "Send Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_payments", "label": "List Payments", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_payment", "label": "Get Payment", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_refund", "label": "Create Refund", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.get_revenue", "label": "Get Revenue", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_product", "label": "Create Product", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_products", "label": "List Products", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_plan", "label": "Create Plan", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_plans", "label": "List Plans", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_checkout_link", "label": "Create Checkout Link", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.list_checkouts", "label": "List Checkouts", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_products", "label": "Polar: List Products", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_create_product", "label": "Polar: Create Product", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.polar_create_checkout", "label": "Polar: Create Checkout", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_orders", "label": "Polar: List Orders", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_subscriptions", "label": "Polar: List Subscriptions", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_customers", "label": "Polar: List Customers", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_settings", "label": "Get Settings", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" }
+  ],
+
+  "credentials": [
+    { "key": "anthropicApiKey", "label": "Claude API Key", "env": "ANTHROPIC_API_KEY" },
+    { "key": "whopApiKey", "label": "Whop API Key", "env": "WHOP_API_KEY" },
+    { "key": "polarAccessToken", "label": "Polar Access Token", "env": "POLAR_ACCESS_TOKEN" }
+  ],
+
   "events": [
     {
       "name": "invoice_created",
