@@ -1,3 +1,5 @@
+import { soshiEvents } from '../../../../src/events/emitter.js';
+
 export type PaymentStatus = "completed" | "pending" | "refunded" | "partial_refund" | "failed";
 
 export interface Payment {
@@ -76,6 +78,7 @@ export function addPayment(data: Omit<Payment, "id" | "createdAt">): Payment {
     createdAt: new Date().toISOString(),
   };
   payments.push(payment);
+  soshiEvents.emit('payment_received', { paymentId: payment.id, invoiceId: payment.invoiceId ?? '', amount: payment.amount, method: payment.method ?? '' });
   return payment;
 }
 
@@ -92,6 +95,7 @@ export function createRefund(data: { paymentId: string; amount: number; reason: 
     createdAt: new Date().toISOString(),
   };
   refunds.push(refund);
+  soshiEvents.emit('refund_issued', { refundId: refund.id, amount: refund.amount, reason: refund.reason ?? '' });
 
   if (data.amount >= payment.amount) {
     payment.status = "refunded";

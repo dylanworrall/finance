@@ -1,3 +1,5 @@
+import { soshiEvents } from '../../../../src/events/emitter.js';
+
 export interface Budget {
   id: string;
   category: string;
@@ -44,5 +46,8 @@ export function addSpending(category: string, amount: number): Budget | undefine
   const budget = budgets.find((b) => b.category.toLowerCase() === category.toLowerCase());
   if (!budget) return undefined;
   budget.spent += amount;
+  if (budget.spent > budget.limit) {
+    soshiEvents.emit('budget_exceeded', { budgetId: budget.id, category: budget.category, amount: budget.spent, limit: budget.limit });
+  }
   return budget;
 }

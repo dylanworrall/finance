@@ -1,3 +1,7 @@
+import { soshiEvents } from '../../../../src/events/emitter.js';
+
+// TODO: emit 'invoice_overdue' when periodic overdue checking is implemented
+
 export type InvoiceStatus = "draft" | "sent" | "paid" | "overdue" | "cancelled";
 
 export interface LineItem {
@@ -113,6 +117,7 @@ export function createInvoice(data: {
     updatedAt: new Date().toISOString(),
   };
   invoices.push(invoice);
+  soshiEvents.emit('invoice_created', { invoiceId: invoice.id, clientName: invoice.clientName, amount: invoice.total, currency: 'USD' });
   return invoice;
 }
 
