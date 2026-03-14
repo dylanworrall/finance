@@ -6,9 +6,13 @@ function getPolarClient() {
   const token = process.env.POLAR_ACCESS_TOKEN;
   if (!token) return null;
   // Dynamic import to avoid errors when not configured
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { Polar } = require("@polar-sh/sdk");
-  return new Polar({ accessToken: token }) as PolarClient;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { Polar } = require("@polar-sh/sdk");
+    return new Polar({ accessToken: token }) as PolarClient;
+  } catch {
+    throw new Error("Polar SDK not installed. Run: npm install @polar-sh/sdk");
+  }
 }
 
 interface PolarClient {
