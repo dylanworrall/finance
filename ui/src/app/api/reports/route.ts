@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getReports, addReport } from "@/lib/stores/reports";
 import { getTransactions } from "@/lib/stores/transactions";
+import { getConvexClient, isConvexMode } from "@/lib/convex-server";
+import { api } from "@/lib/convex-api";
 
 export async function GET() {
+  if (isConvexMode()) {
+    const convex = getConvexClient()!;
+    const reports = await convex.query(api.reports.list, {});
+    return NextResponse.json({ reports });
+  }
   const reports = getReports();
   return NextResponse.json({ reports });
 }

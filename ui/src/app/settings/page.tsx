@@ -426,7 +426,7 @@ export default function SettingsPage() {
               <strong>Draft</strong> = queued for approval. <strong>Manual</strong> = requires explicit command.
             </p>
             <div className="space-y-2">
-              {Object.entries(settings.agentModes).map(([tool, mode]) => (
+              {Object.entries(settings.agentModes ?? {}).map(([tool, mode]) => (
                 <div
                   key={tool}
                   className="flex items-center justify-between p-3 rounded-xl bg-surface-1 border border-border"
