@@ -1,0 +1,166 @@
+{
+  "id": "finance",
+  "name": "Finance",
+  "icon": "wallet",
+  "color": "#FF9F0A",
+  "description": "AI-powered finance hub: invoicing, payments, revenue tracking, budgets, and financial reporting",
+  "configSchema": "./src/config/schema.ts",
+  "defaults": "./src/config/defaults.ts",
+  "mcpServer": "./src/mcp/server.ts",
+  "toolsPath": "./ui/src/lib/ai/tools/index.ts",
+  "dataDir": "~/.finance/data/",
+
+  "configFields": [
+    { "key": "whopCompanyId", "label": "Whop Company ID", "type": "string", "group": "General", "defaultValue": "" },
+
+    { "key": "agentModes.create_invoice", "label": "Create Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_invoices", "label": "List Invoices", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_invoice", "label": "Get Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.send_invoice", "label": "Send Invoice", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_payments", "label": "List Payments", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_payment", "label": "Get Payment", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_refund", "label": "Create Refund", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.get_revenue", "label": "Get Revenue", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_product", "label": "Create Product", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_products", "label": "List Products", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_plan", "label": "Create Plan", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.list_plans", "label": "List Plans", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.create_checkout_link", "label": "Create Checkout Link", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.list_checkouts", "label": "List Checkouts", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_products", "label": "Polar: List Products", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_create_product", "label": "Polar: Create Product", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "draft" },
+    { "key": "agentModes.polar_create_checkout", "label": "Polar: Create Checkout", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_orders", "label": "Polar: List Orders", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_subscriptions", "label": "Polar: List Subscriptions", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.polar_list_customers", "label": "Polar: List Customers", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" },
+    { "key": "agentModes.get_settings", "label": "Get Settings", "type": "select", "group": "Agent Modes", "options": ["auto", "draft", "manual"], "defaultValue": "auto" }
+  ],
+
+  "credentials": [
+    { "key": "anthropicApiKey", "label": "Claude API Key", "env": "ANTHROPIC_API_KEY" },
+    { "key": "whopApiKey", "label": "Whop API Key", "env": "WHOP_API_KEY" },
+    { "key": "polarAccessToken", "label": "Polar Access Token", "env": "POLAR_ACCESS_TOKEN" }
+  ],
+
+  "events": [
+    {
+      "name": "invoice_created",
+      "description": "A new invoice was created",
+      "schema": {
+        "invoiceId": "string",
+        "clientName": "string",
+        "amount": "number",
+        "currency": "string",
+        "status": "string"
+      }
+    },
+    {
+      "name": "payment_received",
+      "description": "A payment was received or recorded",
+      "schema": {
+        "paymentId": "string",
+        "invoiceId": "string",
+        "amount": "number",
+        "method": "string"
+      }
+    },
+    {
+      "name": "invoice_overdue",
+      "description": "An invoice passed its due date without payment",
+      "schema": {
+        "invoiceId": "string",
+        "clientName": "string",
+        "amount": "number",
+        "dueDate": "string",
+        "daysPastDue": "number"
+      }
+    },
+    {
+      "name": "refund_issued",
+      "description": "A refund was processed for a payment",
+      "schema": {
+        "refundId": "string",
+        "paymentId": "string",
+        "amount": "number",
+        "reason": "string"
+      }
+    },
+    {
+      "name": "budget_exceeded",
+      "description": "Spending exceeded a budget threshold",
+      "schema": {
+        "category": "string",
+        "budgetAmount": "number",
+        "actualAmount": "number",
+        "period": "string"
+      }
+    }
+  ],
+
+  "actions": [
+    {
+      "name": "create_invoice",
+      "description": "Create a new invoice for a client",
+      "tool": "create_invoice",
+      "params": {
+        "clientName": "string",
+        "items": "object[]",
+        "dueDate?": "string",
+        "currency?": "string"
+      }
+    },
+    {
+      "name": "send_invoice",
+      "description": "Send an invoice to the client",
+      "tool": "send_invoice",
+      "params": {
+        "invoiceId": "string"
+      }
+    },
+    {
+      "name": "create_refund",
+      "description": "Process a refund for a payment",
+      "tool": "create_refund",
+      "params": {
+        "paymentId": "string",
+        "amount?": "number",
+        "reason?": "string"
+      }
+    },
+    {
+      "name": "add_transaction",
+      "description": "Log a manual transaction",
+      "tool": "add_transaction",
+      "params": {
+        "description": "string",
+        "amount": "number",
+        "type": "string",
+        "category?": "string"
+      }
+    },
+    {
+      "name": "generate_report",
+      "description": "Generate a financial report",
+      "tool": "generate_report",
+      "params": {
+        "type": "string",
+        "period?": "string"
+      }
+    }
+  ],
+
+  "routerKeywords": [
+    "invoice", "invoices", "invoicing",
+    "payment", "payments", "pay",
+    "refund", "refunds",
+    "revenue", "mrr", "arr",
+    "budget", "budgets", "spending",
+    "whop", "polar",
+    "transaction", "transactions",
+    "billing", "bill",
+    "subscription", "subscriptions",
+    "checkout", "product", "products",
+    "report", "reports", "analytics",
+    "profit", "expense", "expenses"
+  ]
+}
